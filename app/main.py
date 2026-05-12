@@ -24,7 +24,7 @@ def main():
 
         with open(f"./.git/objects/{path_name}/{file_name}", "rb") as file:
             raw = file.read()
-        content = zlib.decompress(raw).split(b"\0", 1)[1]
+        content = zlib.decompress(raw).split(b"\0", 1)[1].strip(b"b'")
 
         print(content)
 
