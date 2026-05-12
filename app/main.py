@@ -35,9 +35,12 @@ def main():
         raw = zlib.compress(
             b"blob" + str(len(content)).encode() + b"\0" + content.encode()
         )
+
         sha_hash = str(hashlib.sha1(raw).hexdigest())
         path_name = sha_hash[:2]
         file_name = sha_hash[2:]
+
+        os.makedirs(f"./.git/objects/{path_name}", exist_ok=True)
 
         with open(f"./.git/objects/{path_name}/{file_name}", "wb") as file:
             file.write(raw)
