@@ -21,11 +21,9 @@ def main():
         raise RuntimeError(f"Unknown command #{command}")
 
     if command == "cat-file":
-        sha_hash = sys.argv[2]
+        sha_hash = sys.argv[3]
         path_name = sha_hash[:2]
         file_name = sha_hash[2:]
-
-        print("Reading from the object")
 
         with open(f"./.git/{path_name}/{file_name}", "rb") as file:
             raw = file.read()
