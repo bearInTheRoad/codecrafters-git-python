@@ -33,7 +33,7 @@ def main():
         with open(file_path, "r") as file:
             content = file.read()
         raw = zlib.compress(
-            b"blob" + str(len(content)).encode() + b"\0" + content.encode()
+            b"blob " + str(len(content)).encode() + b"\0" + content.encode()
         )
 
         sha_hash = str(hashlib.sha1(raw).hexdigest())
