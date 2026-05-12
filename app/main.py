@@ -32,11 +32,11 @@ def main():
         file_path = sys.argv[3]
         with open(file_path, "r") as file:
             content = file.read()
-        raw = zlib.compress(
-            b"blob " + str(len(content)).encode() + b"\0" + content.encode()
-        )
+        raw_b_string = b"blob " + str(len(content)).encode() + b"\0" + content.encode()
 
-        sha_hash = str(hashlib.sha1(raw).hexdigest())
+        raw = zlib.compress(raw_b_string)
+
+        sha_hash = str(hashlib.sha1(raw_b_string).hexdigest())
         path_name = sha_hash[:2]
         file_name = sha_hash[2:]
 
