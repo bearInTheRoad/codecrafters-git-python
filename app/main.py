@@ -22,7 +22,7 @@ def main():
         path_name = sha_hash[:2]
         file_name = sha_hash[2:]
 
-        with open(f"./.git/{path_name}/{file_name}", "rb") as file:
+        with open(f"./.git/objects/{path_name}/{file_name}", "rb") as file:
             raw = file.read()
         zlib.decompress(raw)
         print(raw)
