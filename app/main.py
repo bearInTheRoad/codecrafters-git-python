@@ -24,8 +24,9 @@ def main():
 
         with open(f"./.git/objects/{path_name}/{file_name}", "rb") as file:
             raw = file.read()
-        zlib.decompress(raw)
-        print(raw)
+        content = zlib.decompress(raw)
+
+        print(content)
 
     else:
         raise RuntimeError(f"Unknown command #{command}")
