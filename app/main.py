@@ -17,10 +17,7 @@ def main():
         with open(".git/HEAD", "w") as f:
             f.write("ref: refs/heads/main\n")
         print("Initialized git directory")
-    else:
-        raise RuntimeError(f"Unknown command #{command}")
-
-    if command == "#cat-file":
+    elif command == "cat-file":
         sha_hash = sys.argv[3]
         path_name = sha_hash[:2]
         file_name = sha_hash[2:]
@@ -29,6 +26,9 @@ def main():
             raw = file.read()
         zlib.decompress(raw)
         print(raw)
+
+    else:
+        raise RuntimeError(f"Unknown command #{command}")
 
 
 if __name__ == "__main__":
