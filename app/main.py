@@ -20,7 +20,7 @@ def main():
     else:
         raise RuntimeError(f"Unknown command #{command}")
 
-    if command == "cat-file":
+    if command == "#cat-file":
         sha_hash = sys.argv[3]
         path_name = sha_hash[:2]
         file_name = sha_hash[2:]
