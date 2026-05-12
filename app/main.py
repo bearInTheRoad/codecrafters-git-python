@@ -1,6 +1,7 @@
 import sys
 import os
 import zlib
+import hashlib
 
 
 def main():
@@ -27,6 +28,21 @@ def main():
         content = zlib.decompress(raw).split(b"\0", 1)[1].decode()
 
         sys.stdout.write(content)
+    elif command == "hash-object":
+        file_path = sys.argv[3]
+        with open(file_path, "r") as file:
+            content = file.read()
+        raw = zlib.compress(
+            b"blob" + str(len(content)).encode() + b"\0" + content.encode()
+        )
+        sha_hash = str(hashlib.sha1(raw))
+        path_name = sha_hash[:2]
+        file_name = sha_hash[2:]
+
+        with open(f"./.git/object/{path_name}/{file_name}", "wb") as file:
+            file.write(raw)
+
+        sys.stdout.write(sha_hash)
 
     else:
         raise RuntimeError(f"Unknown command #{command}")
