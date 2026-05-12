@@ -1,5 +1,6 @@
 import sys
 import os
+import zlib
 
 
 def main():
@@ -18,6 +19,16 @@ def main():
         print("Initialized git directory")
     else:
         raise RuntimeError(f"Unknown command #{command}")
+
+    if command == "cat-file":
+        sha_hash = sys.argv[2]
+        path_name = sha_hash[:2]
+        file_name = sha_hash[2:]
+
+        with open(f"./.git/{path_name}/{file_name}", "rb") as file:
+            raw = file.read()
+        zlib.decompress(raw)
+        print(raw)
 
 
 if __name__ == "__main__":
