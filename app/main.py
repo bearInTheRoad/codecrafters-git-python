@@ -65,7 +65,7 @@ def main():
 
         dir_list = [element.split(b" ")[1].decode() for element in content_list[1::2]]
 
-        return dir_list
+        return "\n".join(dir_list)
 
     else:
         raise RuntimeError(f"Unknown command #{command}")
