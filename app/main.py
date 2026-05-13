@@ -71,6 +71,7 @@ def main():
                 dir_list.append(name.decode())
             except ValueError:
                 print("end of the file")
+                continue
 
         return "\n".join(dir_list)
 
