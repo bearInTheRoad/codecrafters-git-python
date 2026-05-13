@@ -66,8 +66,11 @@ def main():
         dir_list = [b_first_name.decode()]
         for element in content_list[2:]:
             digest = element[:20]
-            mode, name = element[20:].split(b" ")
-            dir_list.append(name.decode())
+            try:
+                mode, name = element[20:].split(b" ")
+                dir_list.append(name.decode())
+            except ValueError:
+                print("end of the file")
 
         return "\n".join(dir_list)
 
