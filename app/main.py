@@ -72,7 +72,7 @@ def main():
             except ValueError:
                 continue
 
-        sys.stdout.write("\n".join(dir_list))
+        sys.stdout.write("\n".join(dir_list) + "\n")
 
     else:
         raise RuntimeError(f"Unknown command #{command}")
