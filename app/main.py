@@ -70,10 +70,9 @@ def main():
                 mode, name = element[20:].split(b" ")
                 dir_list.append(name.decode())
             except ValueError:
-                print("end of the file")
                 continue
 
-        return "\n".join(dir_list)
+        sys.stdout.write("\n".join(dir_list))
 
     else:
         raise RuntimeError(f"Unknown command #{command}")
