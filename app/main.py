@@ -54,7 +54,7 @@ def main():
         path_name = tree_sha1[:2]
         file_name = tree_sha1[2:]
 
-        with open(os.path.join(path_name, file_name), "rb") as file:
+        with open(f"./.git/objects/{path_name}/{file_name}", "rb") as file:
             raw = file.read()
 
         raw_b_string = zlib.decompress(raw)
@@ -63,7 +63,7 @@ def main():
 
         b_tree_name, b_tree_size = content_list[0].split(b" ")
 
-        dir_list = [b_dir_name.decode() for _, b_dir_name in content_list[1::2]]
+        dir_list = [element.split(b" ")[1].decode() for element in content_list[1::2]]
 
         return dir_list
 
