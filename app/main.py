@@ -62,8 +62,11 @@ def main():
         content_list = raw_b_string.split(b"\0")
 
         b_tree_name, b_tree_size = content_list[0].split(b" ")
-
-        dir_list = [element.split(b" ")[1].decode() for element in content_list[1::2]]
+        dir_list = []
+        for element in content_list[1::2]:
+            b_mode, b_name = element.split(b" ")
+            dir_list.append(b_name.decode())
+            print(dir_list)
 
         return "\n".join(dir_list)
 
