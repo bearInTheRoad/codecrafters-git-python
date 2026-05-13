@@ -8,8 +8,6 @@ def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!", file=sys.stderr)
 
-    # TODO: Uncomment the code below to pass the first stage
-    #
     command = sys.argv[1]
     if command == "init":
         os.mkdir(".git")
@@ -18,6 +16,7 @@ def main():
         with open(".git/HEAD", "w") as f:
             f.write("ref: refs/heads/main\n")
         print("Initialized git directory")
+
     elif command == "cat-file":
         sha_hash = sys.argv[3]
         path_name = sha_hash[:2]
@@ -28,6 +27,7 @@ def main():
         content = zlib.decompress(raw).split(b"\0", 1)[1].decode()
 
         sys.stdout.write(content)
+
     elif command == "hash-object":
         file_path = sys.argv[3]
         with open(file_path, "r") as file:
@@ -46,6 +46,26 @@ def main():
             file.write(raw)
 
         sys.stdout.write(sha_hash)
+
+    elif command == "ls-tree":
+        is_name_only = sys.argv[2]
+        tree_sha1 = sys.argv[3]
+
+        path_name = tree_sha1[:2]
+        file_name = tree_sha1[2:]
+
+        with open(os.path.join(path_name, file_name), "rb") as file:
+            raw = file.read()
+
+        raw_b_string = zlib.decompress(raw)
+
+        content_list = raw_b_string.split(b"\0")
+
+        b_tree_name, b_tree_size = content_list[0].split(b" ")
+
+        dir_list = [b_dir_name.decode() for _, b_dir_name in content_list[1::2]]
+
+        return dir_list
 
     else:
         raise RuntimeError(f"Unknown command #{command}")
