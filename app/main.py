@@ -61,16 +61,17 @@ def main():
 
         content_list = raw_b_string.split(b"\0")
 
+        # refactor
+        # this should be able to solve more elegantly
+
         b_tree_name, b_tree_size = content_list[0].split(b" ")
         b_first_mode, b_first_name = content_list[1].split(b" ")
         dir_list = [b_first_name.decode()]
+
         for element in content_list[2:]:
-            digest = element[:20]
-            try:
+            if len(element) > 20:
                 mode, name = element[20:].split(b" ")
                 dir_list.append(name.decode())
-            except ValueError:
-                continue
 
         sys.stdout.write("\n".join(dir_list) + "\n")
 
