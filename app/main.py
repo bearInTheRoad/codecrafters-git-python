@@ -39,14 +39,14 @@ def hash_folder(folder_path: str):
             mode = "100755" if os.access(f_object.path, os.X_OK) else "100644"
             dir_size += f_object.stat().st_size
 
-        content_string_list.append(f"{mode} {f_object.name}\0{sha_hash}")
+        content_string_list.append(f"{mode} {f_object.name}\0{sha_hash}".encode())
 
     dir_b_string = (
         dir_b_string
         + b" "
         + str(dir_size).encode()
         + b"\0"
-        + "".join(content_string_list).encode()
+        + b"".join(content_string_list)
     )
 
     raw = zlib.compress(dir_b_string)
