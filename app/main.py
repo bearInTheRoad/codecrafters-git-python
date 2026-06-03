@@ -28,7 +28,9 @@ def hash_folder(folder_path: str):
     dir_b_string = b"tree"
     dir_size = 0
     content_string_list = []
-    for f_object in os.scandir(folder_path):
+    for f_object in sorted(os.scandir(folder_path), key=lambda e: e.name):
+        if f_object.name.startswith(".git"):
+            continue
         if f_object.is_dir():
             sha_hash, folder_size = hash_folder(f_object.path)
             mode = "40000"
