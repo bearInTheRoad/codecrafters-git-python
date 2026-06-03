@@ -119,7 +119,7 @@ def main():
         sys.stdout.write("\n".join(dir_list) + "\n")
 
     elif command == "write-tree":
-        dir_hash, _ = hash_folder("./")
+        dir_hash = hash_folder("./")
 
         sys.stdout.write(dir_hash)
 
