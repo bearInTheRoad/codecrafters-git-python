@@ -30,7 +30,7 @@ def hash_folder(folder_path: str):
         if f_object.name.startswith(".git"):
             continue
         if f_object.is_dir():
-            sha_hash, folder_size = hash_folder(f_object.path)
+            sha_hash = hash_folder(f_object.path)
             mode = "40000"
         else:
             sha_hash = hash_file(f_object.path)
