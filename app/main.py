@@ -5,7 +5,6 @@ import hashlib
 
 
 def hash_file(file_path: str):
-    print(file_path)
     with open(file_path, "r") as file:
         content = file.read()
     raw_b_string = b"blob " + str(len(content)).encode() + b"\0" + content.encode()
