@@ -55,7 +55,7 @@ def hash_folder(folder_path: str):
     path_name = sha_hash[:2]
     file_name = sha_hash[2:]
 
-    os.makedirs(f"./.git/objects/{path_name}/{file_name}", exist_ok=True)
+    os.makedirs(f"./.git/objects/{path_name}", exist_ok=True)
 
     with open(f"./.git/objects/{path_name}/{file_name}", "wb") as file:
         file.write(raw)
