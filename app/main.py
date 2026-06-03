@@ -25,7 +25,6 @@ def hash_file(file_path: str):
 
 def hash_folder(folder_path: str):
     dir_b_string = b"tree"
-    dir_size = 0
     content_string_list = []
     for f_object in sorted(os.scandir(folder_path), key=lambda e: e.name):
         if f_object.name.startswith(".git"):
@@ -33,18 +32,18 @@ def hash_folder(folder_path: str):
         if f_object.is_dir():
             sha_hash, folder_size = hash_folder(f_object.path)
             mode = "40000"
-            dir_size += folder_size
         else:
             sha_hash = hash_file(f_object.path)
             mode = "100755" if os.access(f_object.path, os.X_OK) else "100644"
-            dir_size += f_object.stat().st_size
 
-        content_string_list.append(f"{mode} {f_object.name}\0{sha_hash}".encode())
+        content_string_list.append(
+            f"{mode} {f_object.name}\0".encode() + bytes.fromhex(sha_hash)
+        )
 
     dir_b_string = (
         dir_b_string
         + b" "
-        + str(dir_size).encode()
+        + str(len(b"".join(content_string_list))).encode()
         + b"\0"
         + b"".join(content_string_list)
     )
@@ -61,7 +60,7 @@ def hash_folder(folder_path: str):
     with open(f"./.git/objects/{path_name}/{file_name}", "wb") as file:
         file.write(raw)
 
-    return sha_hash, dir_size
+    return sha_hash
 
 
 def main():
