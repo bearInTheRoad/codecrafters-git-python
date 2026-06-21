@@ -162,17 +162,18 @@ def main():
 
         commit_b_string_list = [
             b"commit",
-            b"0",
-            b"\0tree ",
+            b"0\0",
+            b"tree ",
             tree_sha1.encode(),
             b"\nparent ",
             commit_sha1.encode(),
             b"\nauthor dylan <dylan@123.com> 1234567890 +0000\ncommitter dylan <dylan@123.com> 1234567890 +0000\n",
+            b"\n",
             b"Hello World",
         ]
 
         size = len(b"".join(commit_b_string_list[2:]))
-        commit_b_string_list[1] = str(size).encode()
+        commit_b_string_list[1] = str(size).encode() + b"\0"
 
         commit_object = b"".join(commit_b_string_list)
 
