@@ -155,13 +155,15 @@ def main():
 
         # ./your_program.sh commit-tree <tree_sha> -p <commit_sha> -m <message>
 
-        commit_sha1 = sys.argv[4]
+        # print(sys.argv)
         tree_sha1 = sys.argv[2]
+        commit_sha1 = sys.argv[4]
+        message = sys.argv[6]
 
         # leave a placeholder here, will calculate and replace in the end
 
         commit_b_string_list = [
-            b"commit",
+            b"commit ",
             b"0\0",
             b"tree ",
             tree_sha1.encode(),
@@ -169,7 +171,8 @@ def main():
             commit_sha1.encode(),
             b"\nauthor dylan <dylan@123.com> 1234567890 +0000\ncommitter dylan <dylan@123.com> 1234567890 +0000\n",
             b"\n",
-            b"Hello World",
+            message.encode(),
+            b"\n",
         ]
 
         size = len(b"".join(commit_b_string_list[2:]))
